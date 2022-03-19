@@ -1,0 +1,15 @@
+{
+  "name": "chap02",
+  "version": "1.0.0",
+  "description": "- Tổng quan về web - Tổng quan về NodeJS - Module trong NodeJS",
+  "main": "homework.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "is-odd-num": "^1.1.1"
+  }
+}
