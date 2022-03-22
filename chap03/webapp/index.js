@@ -22,7 +22,7 @@ app.get('/hi', (req, res) => {
 })
 
 app.get('/test', (req, res) => {
-  res.send({ test: '3' })
+  res.send({ test: '4' })
 })
 
 app.get('/number', (req, res) => {
