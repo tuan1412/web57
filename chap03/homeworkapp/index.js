@@ -1,5 +1,6 @@
 const express = require('express');
 const postModel = require('./post');
+const commentModel = require('./comment');
 
 const app = express();
 
@@ -88,6 +89,9 @@ app.get('/api/posts', async (req, res) => {
   }
 })
 
+// api/posts/abc
+// api/posts/xyz
+// api/posts/1
 app.get('/api/posts/:postId', async (req, res) => {
   try {
     // path param
@@ -96,6 +100,19 @@ app.get('/api/posts/:postId', async (req, res) => {
     const foundPost = await postModel.getPost(postId)
   
     res.send({ success: 1, data: foundPost })
+  } catch (err) {
+    res.send({ success: 0, data: null, message: err.message })
+  }
+})
+
+app.get('/api/posts/:postId/comments', async (req, res) => {
+  try {
+    // path param
+    const { postId } = req.params;
+
+    const comments = await commentModel.getCommentsByPost(postId)
+  
+    res.send({ success: 1, data: comments })
   } catch (err) {
     res.send({ success: 0, data: null, message: err.message })
   }
@@ -110,6 +127,28 @@ app.put('/api/posts/:postId', async (req, res) => {
     await postModel.updatePost({ content, postId })
   
     res.send({ success: 1 })
+  } catch (err) {
+    res.send({ success: 0, data: null, message: err.message })
+  }
+})
+
+app.post('/api/comments', async (req, res) => {
+  try {
+    const { content, createdBy, postId } = req.body;
+
+    const newComment = await commentModel.createComment({ content, postId, createdBy })
+  
+    res.send({ success: 1, data: newComment });
+  } catch (err) {
+    res.send({ success: 0, data: null, message: err.message })
+  }
+})
+
+app.get('/api/comments', async (req, res) => {
+  try {
+    const comments = await commentModel.getComments()
+  
+    res.send({ success: 1, data: comments });
   } catch (err) {
     res.send({ success: 0, data: null, message: err.message })
   }
