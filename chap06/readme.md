@@ -110,7 +110,7 @@ Ví dụ các trường hợp khác
 1 Profile - 1 User
 // Quan hệ một - một
 // Đặc điểm: cả 2 cái 1 - 1
-
+```
 ### Thiết kế trong MongoDB
 Sau khi xác định xong cái mối liên hệ, ta mới áp vào một công nghệ cụ thể. Trong khoá này là MongoDB, trong thực tế nó còn có thể là MySQL,..
 
