@@ -13,7 +13,7 @@ const PostModel = mongoose.model('Post', postSchema);
 
 mongoose.connect('mongodb://localhost:27017/demo_db', err => {
   if (err) {
-    return console.log('Err connect mongodb', err)
+    return console.lpostControllerog('Err connect mongodb', err)
   }
 
   console.log('Connect DB successfully')
@@ -77,6 +77,8 @@ app.delete('/api/posts/:postId', async (req, res) => {
 
   res.send({ success: 1, data: deletedPost });
 })
+
+// api/comments
 
 app.listen(8080, err => {
   if (err) {
