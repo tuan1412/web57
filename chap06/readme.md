@@ -75,6 +75,7 @@ const birds = require('./birds')
 // ...
 
 app.use('/birds', birds)
+```
 
 ## Review cách thiết kế cơ sở dữ liệu trong MongoDB
 
