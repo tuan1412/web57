@@ -1,8 +1,10 @@
+require('dotenv').config()
 const express = require('express');
+const authRouter = require('./modules/auth/auth.router');
 const postRouter = require('./modules/post/post.router');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/mindx-images-web57', err => {
+mongoose.connect(process.env.MONGODB_URI, err => {
   if (err) {
     return console.log('DB connect err', err);
   }
@@ -14,11 +16,13 @@ app.use(express.json());
 
 // Tất cả HTTP request nào có tiền tố là /api/posts => thì đi vào postRouter
 app.use('/api/posts', postRouter);
+app.use('/api/auth', authRouter);
 
 app.use('*', (req, res) => {
   res.send({ message: '404 not found' })
 })
-app.listen(8080, (err) => {
+
+app.listen(process.env.PORT || 8080, (err) => {
   if (err) {
     return console.log('Server Error', err);
   }

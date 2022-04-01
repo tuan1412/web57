@@ -9,7 +9,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  addresses: [String],
 }, {
   // tự động thêm createdAt, updatedAt
   timestamps: true
