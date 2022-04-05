@@ -14,14 +14,19 @@ function checkRole(role) {
 // Hàm needAuthenticated được cài đặt như ở trên lớp
 // API delete chỉ user có role là admin có quyền xoá bài
 router.delete(
-  '/posts', 
+  '/posts/:postId', 
   needAuthenticated, 
   checkRole('admin'), 
   controller.deletePost
 )
 
 // API tạo bài chỉ user có role là user mới có quyền tạo bài
-router.post('/posts', needAuthenticated, checkRole('user'), controller.deletePost)
+router.post(
+  '/posts', 
+  needAuthenticated, 
+  checkRole('user'), 
+  controller.createPost
+)
 
 ```
 # Ex3
