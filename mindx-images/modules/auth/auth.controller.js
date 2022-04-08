@@ -33,7 +33,6 @@ const register = async (req, res) => {
 }
 
 const login = async (req, res) => {
- 
   const { username, password } = req.body;
 
   const existedUser = await UserModel.findOne({
