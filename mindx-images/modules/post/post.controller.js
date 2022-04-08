@@ -2,8 +2,6 @@ const PostModel = require('./post');
 
 const getPosts = async (req, res, next) => {
   console.log('req.user=', req.user);
-
-  throw new Error('fake error');
   
   const posts = await PostModel.find({});
   res.send({ success: 1, data: posts });
@@ -36,7 +34,8 @@ const updatePost = async (req, res) => {
     throw new Error('Not found post');
   }
 
-  if (foundPost.createdBy !== senderUser._id) {
+  const notAuthor = foundPost.createdBy !== senderUser._id;
+  if (notAuthor) {
     throw new Error('Can not update other post');
   }
 

@@ -4,6 +4,7 @@ require('express-async-errors');
 const express = require('express');
 const authRouter = require('./modules/auth/auth.router');
 const postRouter = require('./modules/post/post.router');
+const uploadRouter = require('./modules/upload/upload.router');
 const mongoose = require('mongoose');
 
 mongoose.connect(process.env.MONGODB_URI, err => {
@@ -16,6 +17,8 @@ mongoose.connect(process.env.MONGODB_URI, err => {
 const app = express();
 app.use(express.json());
 
+app.use(express.static('uploads'));
+
 //express.json là một hàm
 // express.json() => req.body có value => return middleware
 app.use((req, res, next) => {
@@ -26,6 +29,7 @@ app.use((req, res, next) => {
 // Tất cả HTTP request nào có tiền tố là /api/posts => thì đi vào postRouter
 app.use('/api/posts', postRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/upload', uploadRouter);
 
 app.use('*', (req, res, next) => {
   res.send({ message: '404 not found' })
@@ -35,7 +39,8 @@ app.use('*', (req, res, next) => {
 app.use(function (err, req, res, next) {
   // if (err.priority == 'high') {
     // sendEmailToAdmin
-  // }  
+  // } 
+  console.log(err);
   res.status(err.status || 500).send({ success: 0, message: err.message });
 })
 
