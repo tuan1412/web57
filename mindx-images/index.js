@@ -26,6 +26,10 @@ app.use((req, res, next) => {
   next();
 })
 
+app.get('/', (req, res) => {
+  res.send('<h1>Xin chào đã đến với web57</h1>')
+})
+
 // Tất cả HTTP request nào có tiền tố là /api/posts => thì đi vào postRouter
 app.use('/api/posts', postRouter);
 app.use('/api/auth', authRouter);
