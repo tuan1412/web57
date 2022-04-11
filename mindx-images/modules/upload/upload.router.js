@@ -27,7 +27,7 @@ router.post(
 
 router.post(
   '/disk',
-  upload.single('file'),
+  upload.single('image'),
   uploadController.uploadToDisk
 );
 

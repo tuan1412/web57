@@ -1,10 +1,75 @@
 const PostModel = require('./post');
+const mongoose = require('mongoose');
 
+const getHotPosts = async (req, res) => {
+  // DO that
+  const posts = await 
+    PostModel.find({ likeCount: { $gt: 100 }}).sort({ likeCount: -1 });
+
+  // NOT DO That
+  // const posts = await PostModel.find({});
+  // const hotPosts = posts.filter(p => p.likeCount > 100);
+
+  res.send({ success: 1, data: posts });
+}
+
+// req.query
 const getPosts = async (req, res, next) => {
   console.log('req.user=', req.user);
+
+  const { createdBy, keyword, tag, offset, limit, sort } = req.query;
+
+  const offsetNumber = offset && Number(offset) ? Number(offset) : 0;
+  const limitNumber = limit && Number(limit) ? Number(limit) : 4;
+
+  let filter = {};
+  let sortCond = {};
+
+  if (sort) {
+    const [sortField, sortDirection] = sort.split('_');
+    if (sortField && sortDirection) {
+      sortCond[sortField] = sortDirection === 'desc' ? -1 : 1;
+    }
+  }
+
+  if (createdBy) {
+    filter.createdBy = createdBy
+  }
+
+  if (keyword) {
+    const regex = new RegExp(`${keyword}`, 'i');
+    const regexCond = { $regex: regex };
+    console.log(regexCond);
+
+    // filter.title = { $regex: regex }
+    filter['$or'] = [
+      { title: regexCond },
+      { description: regexCond }
+    ]
+  }
+
+  if (tag) {
+    filter.tags = tag
+  }
+
+  console.log(filter);
   
-  const posts = await PostModel.find({});
-  res.send({ success: 1, data: posts });
+  const posts = await 
+    PostModel
+      .find(filter)
+      .skip(offsetNumber)
+      .limit(limitNumber)
+      .sort(sortCond);
+
+  const totalPost = await PostModel.countDocuments(filter);
+
+  res.send({ 
+    success: 1, 
+    data: {
+      data: posts,
+      total: totalPost
+    }
+  });
 }
 
 const createPost = async (req, res, next) => {
@@ -51,8 +116,40 @@ const updatePost = async (req, res) => {
   
 }
 
+const likePost = async (req, res) => {
+  const { postId } = req.params;
+ 
+  const updatedPost = await PostModel
+    .findByIdAndUpdate(
+      postId, 
+      { $inc: { likeCount: 1 } }, 
+      { new: true }
+    );
+
+  res.send({ success: 1, data: updatedPost });
+
+}
+
+const addTag = async (req, res) => {
+  const { postId } = req.params;
+  const { tag:newTag } = req.body;
+ 
+  const updatedPost = await PostModel
+    .findByIdAndUpdate(
+      postId, 
+      { $push: { tags: newTag } }, 
+      { new: true }
+    );
+
+  res.send({ success: 1, data: updatedPost });
+
+}
+
 module.exports = {
   getPosts,
   createPost,
-  updatePost
+  updatePost,
+  likePost,
+  addTag,
+  getHotPosts
 }
