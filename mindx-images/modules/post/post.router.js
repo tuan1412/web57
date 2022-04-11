@@ -33,6 +33,12 @@ router.get(
   '/',
   postController.getPosts
 );
+
+router.get(
+  '/hot',
+  postController.getHotPosts
+);
+
 router.post(
   '/',   
   needAuthenticated,
@@ -43,6 +49,16 @@ router.put(
   '/:postId',
   needAuthenticated,
   postController.updatePost
+);
+
+router.put(
+  '/:postId/likes',
+  postController.likePost
+);
+
+router.put(
+  '/:postId/tags',
+  postController.addTag
 );
 
 router.delete(
