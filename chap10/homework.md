@@ -44,7 +44,7 @@ Giả sử Product Collection có dữ liệu như sau:
     stockQuantity: 0 // số lượng tồn kho
   },
 ]
-
+```
 Với ProductModel là model thoả mãn schema của Product trên. Hãy viết các câu lệnh thoả mãn điều kiện sau.
 
 1. Danh sách tất cả sản phẩm có category là "Quần áo"
