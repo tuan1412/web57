@@ -1,5 +1,5 @@
+const UserModel = require('../auth/user');
 const PostModel = require('./post');
-const mongoose = require('mongoose');
 
 const getHotPosts = async (req, res) => {
   // DO that
@@ -54,19 +54,49 @@ const getPosts = async (req, res, next) => {
 
   console.log(filter);
   
-  const posts = await 
+  const [posts, totalPost] = await Promise.all([
     PostModel
       .find(filter)
+      .populate('createdBy', '-password -__v')
       .skip(offsetNumber)
       .limit(limitNumber)
-      .sort(sortCond);
+      .sort(sortCond),
+      PostModel.countDocuments(filter)
+  ])
 
-  const totalPost = await PostModel.countDocuments(filter);
+  const enhanceUsernamePosts = posts.map(post => {
+    const clonePost = JSON.parse(JSON.stringify(post));
+    
+    return {
+      ...clonePost,
+      createdUsername: post.createdBy ? post.createdBy.username : "",
+      createdBy: post.createdBy ? post.createdBy._id : "",
+    }
+  })
+
+  // Nếu ko dùng populate
+  // const userIds = posts.map(post => post.createdBy)
+  // const users = await UserModel.find({ _id: { $in: userIds }});
+  // // { [id]: username }
+  // // bigO
+  // let mapUser = {};
+  // users.forEach(u => {
+  //   mapUser[u._id] = u.username
+  // });
+
+  // const enhanceUsernamePosts = posts.map(post => {
+  //   const clonePost = JSON.parse(JSON.stringify(post));
+  //   return {
+  //     ...clonePost,
+  //     createdUsername: mapUser[post.createdBy] || ""
+  //   }
+  // })
+
 
   res.send({ 
     success: 1, 
     data: {
-      data: posts,
+      data: enhanceUsernamePosts,
       total: totalPost
     }
   });
