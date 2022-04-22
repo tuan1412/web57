@@ -1,0 +1,21 @@
+.ColorPicker {
+  margin-top: 32px;
+  justify-content: center;
+  background-color: #fff;
+  display: inline-flex;
+  align-items: center;
+}
+
+.ColorPicker-item {
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  background-color: #3498db;
+  border-radius: 3px;
+  margin: 6px;
+}
+
+.ColorPicker-item.active {
+  outline: 2px solid #ccc;
+  transform: scale(1.1);
+}
