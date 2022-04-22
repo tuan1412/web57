@@ -1,0 +1,13 @@
+.App {
+  text-align: center;
+  height: 100vh;
+  transition: all .5s ease-out;
+}
+
+
+.App-header {
+  font-size: 40px;
+  letter-spacing: 1px;
+  color: #fff;
+  padding: 3rem 0 5rem;
+}
