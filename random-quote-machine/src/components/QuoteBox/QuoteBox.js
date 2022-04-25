@@ -17,7 +17,11 @@ class QuoteBox extends Component {
     try {
       this.setState({ status: 'loading' });
 
-      const res = await axios.get('https://api.quotable.io/random');
+      const res = await axios.get('https://api.quotable.io/random', {
+        params: {
+          tags: this.props.activeTags.join(',')
+        }
+      });
       this.setState({
         status: 'success',
         quote: {
@@ -34,8 +38,19 @@ class QuoteBox extends Component {
     this.fetchQuote()
   }
 
+  componentDidUpdate(preProps) {
+    if (preProps.activeTags !== this.props.activeTags) {
+      console.log('vo day');
+      this.fetchQuote()
+    }
+  }
+
+  // React.useEffect(() => {
+  //   fetchQuote();
+  // }, [activeTags])
 
   onRefreshQuote = async () => {
+    // console.log('click btn')
     this.fetchQuote()
   }
 
@@ -76,6 +91,8 @@ class QuoteBox extends Component {
   }
   
   render() {
+    console.log('render');
+
     const { activeColor } = this.props;
     return (
       <div className="QuoteBox" style={{ color: activeColor }}>

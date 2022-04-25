@@ -6,6 +6,7 @@ const authRouter = require('./modules/auth/auth.router');
 const postRouter = require('./modules/post/post.router');
 const uploadRouter = require('./modules/upload/upload.router');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 mongoose.connect(process.env.MONGODB_URI, err => {
   if (err) {
@@ -16,6 +17,7 @@ mongoose.connect(process.env.MONGODB_URI, err => {
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.use(express.static('uploads'));
 

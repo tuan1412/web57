@@ -3,6 +3,7 @@ import './App.css';
 import Clock from './components/Clock/Clock';
 import ColorPicker from './components/ColorPicker/ColorPicker';
 import QuoteBox from './components/QuoteBox/QuoteBox';
+import Tags from './components/Tags/Tags';
 
 // QuoteBox()
 class App extends Component {
@@ -10,8 +11,28 @@ class App extends Component {
     super(props);
     this.state = {
       isShowClock: true,
-      activeColor: 'cornflowerblue'
+      activeColor: 'cornflowerblue',
+      activeTags: [],
     }
+  }
+
+  handleChangeTag = (tagName) => {
+    this.setState(preState => {
+      const { activeTags: oldActiveTags } = preState;
+
+      const isActive = oldActiveTags.includes(tagName);
+
+      if (isActive) {
+        const newActiveTags = oldActiveTags.filter(t => t !== tagName);
+        return {
+          activeTags: newActiveTags
+        }
+      }
+
+      return {
+        activeTags: [...oldActiveTags, tagName]
+      }
+    })
   }
 
   toggleShowClock = () => {
@@ -24,7 +45,9 @@ class App extends Component {
   }
 
   render() {
-    const { isShowClock, activeColor } = this.state;
+    const { isShowClock, activeColor, activeTags } = this.state;
+
+    const cloneActiveTags = [...activeTags];
 
     return (
       <div className="App" style={{ background: activeColor }}>
@@ -37,12 +60,22 @@ class App extends Component {
         </div>
         { isShowClock ? <Clock/> : null}
         <div className="App-content">
-          <QuoteBox isShowClock={isShowClock} activeColor={activeColor} />
+          <QuoteBox 
+            isShowClock={isShowClock} 
+            activeColor={activeColor}
+            activeTags={activeTags}
+          />
         </div>
         <div className="App-picker">
           <ColorPicker 
             onChangeBackgroundColor={this.onChangeBackgroundColor} 
             activeColor={activeColor}
+          />
+        </div>
+        <div className="App-tag">
+          <Tags 
+            handleChangeTag={this.handleChangeTag}
+            activeTags={activeTags}
           />
         </div>
       </div>
