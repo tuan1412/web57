@@ -1,8 +1,9 @@
 import React from 'react';
-import { Pagination as BPagination} from 'react-bootstrap';
+import { Pagination as BPagination } from 'react-bootstrap';
 
 function Pagination({
   activePage,
+  maxPage = 0,
   handleChangePage
 }) {
   const onChangePage = (newActivePage) => {
@@ -10,7 +11,7 @@ function Pagination({
   }
 
   let items = [];
-  for (let number = 1; number <= 5; number++) {
+  for (let number = 1; number <= maxPage; number++) {
     items.push(
       <BPagination.Item 
         key={number} 
