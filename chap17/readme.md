@@ -1,4 +1,4 @@
-# Buổi 16
+# Buổi 17
 - Hiểu về Server Routing vs Client Routing
 - Làm quen với react-router-dom (v6)
 - Xác thực và phân quyền trên client
