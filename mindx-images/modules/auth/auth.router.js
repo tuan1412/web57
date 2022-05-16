@@ -17,7 +17,7 @@ const authController = require('./auth.controller');
 // function (req, res, next) 
 
 router.post(
-  '/register',
+  '/signup',
   validateInput(registerSchema, 'body'), // function (req, res, next)
   // wrapHandleError(authController.register), // 
 
