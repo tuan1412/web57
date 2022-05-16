@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Pagination from "../../components/Pagination/Pagination";
 import Card from "../../components/Card/Card";
-import axios from "axios";
+import axios from "../../api/request";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 
 const MAX_ITEMS_PER_PAGE = 4;
@@ -27,18 +27,18 @@ export default function ListPost() {
         ...preState,
         status: "loading",
       }));
-      const res = await axios.get("http://localhost:8080/api/posts", {
+      const res = await axios.get("/api/posts", {
         params: {
           offset: (activePage - 1) * MAX_ITEMS_PER_PAGE,
         },
       });
 
-      if (res.data.success) {
+      if (res.success) {
         setPostData({
           status: "success",
           data: {
-            posts: res.data.data.data,
-            total: res.data.data.total,
+            posts: res.data.data,
+            total: res.data.total,
           },
         });
       } else {
