@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import Pagination from "../../components/Pagination/Pagination";
 import Card from "../../components/Card/Card";
 import axios from "axios";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 
 const MAX_ITEMS_PER_PAGE = 4;
 
@@ -11,13 +12,14 @@ export default function ListPost() {
     status: "idle",
     data: null,
   });
+  const location = useLocation();
+  const [urlSearchParams, setUrlSearchParams] = useSearchParams()
   const [activePage, setActivePage] = React.useState(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const activePage = urlParams.get("activePage");
+    const activePage = urlSearchParams.get('activePage')
     return activePage ? +activePage : 1;
   });
 
-  
+  console.log(location)
 
   const fetchPosts = React.useCallback(async () => {
     try {
@@ -65,11 +67,8 @@ export default function ListPost() {
 
   React.useEffect(() => {
     if (!isFirstRender.current) {
-      window.history.pushState(
-        { page: activePage },
-        "",
-        `?activePage=${activePage}`
-      );
+      setUrlSearchParams({ activePage })
+    
     } else {
       isFirstRender.current = false;
     }
@@ -104,12 +103,14 @@ export default function ListPost() {
       <Row>
         {postData.data.posts.map((post) => (
           <Col xs={12} md={3} key={post._id}>
-            <Card
-              title={post.title}
-              description={post.description}
-              imageUrl={post.imageUrl}
-              note={post.createdName}
-            />
+            <Link to={`/posts/${post._id}`}>
+              <Card
+                title={post.title}
+                description={post.description}
+                imageUrl={post.imageUrl}
+                note={post.createdName}
+              />
+            </Link>
           </Col>
         ))}
       </Row>

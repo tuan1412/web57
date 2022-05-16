@@ -3,6 +3,7 @@ import axios from "axios";
 import { useForm, useWatch, useFormState } from 'react-hook-form';
 import SlowRender from '../../components/SlowRender/SlowRender';
 import "./Login.css";
+import { Link, useNavigate, NavLink } from 'react-router-dom';
 
 // function SubmitButton({ control }) {
 //   const { username, password } = useWatch({ control });
@@ -42,12 +43,26 @@ export default function Login() {
         mode: 'onChange'
       },
     );
+    const navigate = useNavigate();
 
 
   console.log('fields', touchedFields)
 
-  const onSubmit = (values) => {
-    console.log(values)
+  const onSubmit = async (values) => {
+    const { username, password } = values; 
+    try {
+      const res = await axios({
+        url: 'http://localhost:8080/api/auth/login',
+        method: 'post',
+        data: {
+          username,
+          password
+        }
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   console.log('render');
@@ -93,7 +108,10 @@ export default function Login() {
           </div>
           <div className="card-wrapper mt-4 p-3">
             <div>
-              No account? <a href="/signup">Sign up here</a>
+              Test <NavLink to="/login">Login here</NavLink>
+            </div>
+            <div>
+              No account? <Link to="/signup">Sign up here</Link>
             </div>
           </div>
         </div>
