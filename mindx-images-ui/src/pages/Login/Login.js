@@ -1,10 +1,11 @@
 import React from "react";
-import axios from "axios";
+import axios from '../../api/request';
 import { useForm, useWatch, useFormState } from 'react-hook-form';
 import SlowRender from '../../components/SlowRender/SlowRender';
 import "./Login.css";
 import { Link, useNavigate, NavLink } from 'react-router-dom';
-
+import useAuth from '../../hooks/useAuth';
+import { useSearchParams } from 'react-router-dom'; 
 // function SubmitButton({ control }) {
 //   const { username, password } = useWatch({ control });
 
@@ -44,29 +45,35 @@ export default function Login() {
       },
     );
     const navigate = useNavigate();
+    const { login } = useAuth();
 
-
+  const [searchParams] = useSearchParams();
   console.log('fields', touchedFields)
 
   const onSubmit = async (values) => {
     const { username, password } = values; 
     try {
       const res = await axios({
-        url: 'http://localhost:8080/api/auth/login',
+        url: '/api/auth/login',
         method: 'post',
         data: {
           username,
           password
         }
       });
-      console.log(res);
+      
+      if (res.success) {
+        login({
+          _id: res.data._id,
+          token: res.data.token,
+          returnUrl: searchParams.get('returnUrl') ?? ''
+        })
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
-  console.log('render');
-  console.log('errors', errors);
 
   return (
     <div className="Login container-fluid" style={{ background: "#fafafa" }}>
