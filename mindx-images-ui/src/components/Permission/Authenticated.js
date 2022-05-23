@@ -1,5 +1,6 @@
 import useAuth from '../../hooks/useAuth';
 
+// render as props + children as function
 function Authenticated({ children }) {
   const { isAuthenticated, user } = useAuth();
 
