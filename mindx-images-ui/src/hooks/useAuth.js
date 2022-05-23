@@ -1,14 +1,12 @@
 import React from 'react';
-import { AuthContext } from '../App';
+import { useSelector } from 'react-redux';
 
 function useAuth() {
-  const { user, login, logout } = React.useContext(AuthContext);
+  const user = useSelector(state => state.auth.user); // subscribe
   const isAuthenticated = !!user;
 
   return {
     user,
-    login,
-    logout,
     isAuthenticated
   }
 }

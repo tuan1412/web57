@@ -45,6 +45,11 @@ router.post(
   postController.createPost
 );
 
+router.get(
+  '/:postId',
+  postController.getPost
+);
+
 router.put(
   '/:postId',
   needAuthenticated,

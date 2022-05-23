@@ -38,7 +38,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/upload', uploadRouter);
 
 app.use('*', (req, res, next) => {
-  res.send({ message: '404 not found' })
+  res.status(404).send({ message: '404 not found' })
 })
 
 // bắt toàn bộ các middleware mà gọi hàm next(error);
