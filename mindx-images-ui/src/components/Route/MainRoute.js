@@ -15,14 +15,12 @@ function MainRoute() {
           MindX Images
         </div>
         <NotAuthenticated>
-          <div>
-            <Link to="/login">
-              <Button label="Login" />
-            </Link>
-            <Link to="/signup">
-              <Button>Signup</Button>
-            </Link>
-          </div>
+          <Link to="/login">
+            <Button label="Login"></Button>
+          </Link>
+          <Link to="/signup">
+            <Button>Signup</Button>
+          </Link>
         </NotAuthenticated>
         <Authenticated>
           {user => (

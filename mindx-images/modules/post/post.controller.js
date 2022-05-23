@@ -175,11 +175,20 @@ const addTag = async (req, res) => {
 
 }
 
+const getPost = async (req, res) => {
+  const { postId } = req.params;
+
+  console.log('vo day');
+  const post = await PostModel.findById(postId);
+  res.send({ success: 1, data: post });
+}
+
 module.exports = {
   getPosts,
   createPost,
   updatePost,
   likePost,
   addTag,
-  getHotPosts
+  getHotPosts,
+  getPost
 }

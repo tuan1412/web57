@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch } from 'react-redux';
+import { login } from '../../slices/authSlice';
 import axios from '../../api/request';
 import { useForm, useWatch, useFormState } from 'react-hook-form';
 import SlowRender from '../../components/SlowRender/SlowRender';
@@ -44,8 +46,7 @@ export default function Login() {
         mode: 'onChange'
       },
     );
-    const navigate = useNavigate();
-    const { login } = useAuth();
+  const dispatch = useDispatch();
 
   const [searchParams] = useSearchParams();
   console.log('fields', touchedFields)
@@ -63,11 +64,11 @@ export default function Login() {
       });
       
       if (res.success) {
-        login({
+        dispatch(login({
           _id: res.data._id,
           token: res.data.token,
           returnUrl: searchParams.get('returnUrl') ?? ''
-        })
+        }));
       }
     } catch (err) {
       console.log(err);
