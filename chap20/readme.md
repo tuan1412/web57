@@ -1,4 +1,4 @@
-# Buổi 17
+# Buổi 20
 - Redux
 - Làm quen và áp dụng redux toolkit
 
