@@ -24,7 +24,11 @@ function MainRoute() {
         </NotAuthenticated>
         <Authenticated>
           {user => (
-            <div> Welcome {user.username} </div>
+            <div> Welcome {user.username}
+              <Link to="/posts/create">
+                Create post
+              </Link> 
+            </div>
           )}
         </Authenticated>
         {/* {!isAuthenticated ? (

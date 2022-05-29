@@ -8,6 +8,8 @@ import PrivateRoute from './components/Route/PrivateRoute';
 import GuestRoute from './components/Route/GuestRoute';
 import DetailPost from './pages/DetailPost/DetailPost';
 import CreatePost from './pages/CreatePost/CreatePost';
+import ListPostWithScroll from './pages/ListPostWithScroll/ListPostWithScroll';
+
 import { setUserInfo } from './slices/authSlice';
 
 const Login = lazy(() => import('./pages/Login/Login'));
@@ -64,6 +66,7 @@ function App() {
         <Routes>
           <Route element={<MainRoute />}>
             <Route path="" element={<ListPost />} />
+            <Route path="/scroll" element={<ListPostWithScroll />} />
             <Route path="posts/:postId" element={<DetailPost  />} />
             <Route element={<PrivateRoute  />}>
               <Route path="posts/create" element={<CreatePost />} />
