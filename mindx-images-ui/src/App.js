@@ -70,6 +70,7 @@ function App() {
             <Route path="posts/:postId" element={<DetailPost  />} />
             <Route element={<PrivateRoute  />}>
               <Route path="posts/create" element={<CreatePost />} />
+              <Route path="posts/:postId" element={<DetailPost  />} />
             </Route>
           </Route>
           <Route element={<GuestRoute />}>

@@ -5,9 +5,10 @@ Tập hợp bài giảng lớp web 57, các buổi của bài giảng sẽ chia 
 Nhóm 1: Hùng Sơn, Hoàng Phương, Trịnh Minh Tuấn => Web bán sách
 Nhóm 2: Nguyễn Văn Vũ, Hải Nam => Web tìm việc làm
 Nhóm 3: Trường Hoàng Vũ, Đạt Đỗ => Web nghe nhạc
-Nhóm 4: Hoàng Anh, Tuấn Linh
-Nhóm 5: Hoàng Sơn, Trung Lâm, Đạt Dương, Giang Phùng => web upload video (youtube)
-Nhóm 6: Đỗ Duy Minh Tuấn
+Nhóm 4: Hoàng Anh, Tuấn Linh, Hoàng => Web hỏi đáp
+Nhóm 5: Hoàng Sơn, Trung Lâm => Web colors
+Nhóm 6 Đạt Dương, Giang Phùng => web upload video (youtube)
+Nhóm 7: Đỗ Duy Minh Tuấn => web xem video
 
 Trong DB
 0 1 2 3 4 5 6 7 8
